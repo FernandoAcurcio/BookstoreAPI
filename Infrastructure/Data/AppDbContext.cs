@@ -1,7 +1,7 @@
 ﻿using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructures.Data
+namespace Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {

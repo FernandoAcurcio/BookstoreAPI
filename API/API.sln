@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API.csproj", "{50C2B999-8442-4168-A3BE-EFB0B3523BFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API.csproj", "{50C2B999-8442-4168-A3BE-EFB0B3523BFA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2BCBEFE8-706F-4B10-BD9D-8B8C88211C75} = {2BCBEFE8-706F-4B10-BD9D-8B8C88211C75}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "..\Core\Core.csproj", "{10F5AC47-4CF3-4D2F-AF94-B43B819BE5D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "..\Core\Core.csproj", "{10F5AC47-4CF3-4D2F-AF94-B43B819BE5D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{2BCBEFE8-706F-4B10-BD9D-8B8C88211C75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{2BCBEFE8-706F-4B10-BD9D-8B8C88211C75}"
+	ProjectSection(ProjectDependencies) = postProject
+		{10F5AC47-4CF3-4D2F-AF94-B43B819BE5D3} = {10F5AC47-4CF3-4D2F-AF94-B43B819BE5D3}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
