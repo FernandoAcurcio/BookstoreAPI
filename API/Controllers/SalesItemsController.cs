@@ -58,7 +58,7 @@ namespace API.Controllers
             _context.SalesItems.Add(salesItem);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return CreatedAtAction(nameof(GetSalesItemAsync), new { id = salesItem.Id }, salesItem);
         }
 
         /// <summary>

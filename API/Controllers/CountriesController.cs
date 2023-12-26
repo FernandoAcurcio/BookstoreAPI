@@ -9,7 +9,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/countries")]
-    public class CountriesController
+    public class CountriesController : ControllerBase
     {
         private readonly AppDbContext _context;
 
@@ -27,7 +27,15 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Country>> GetCustomerAsync(int id)
         {
-            return await _context.Countries.FindAsync(id);
+            //return await _context.Countries.FindAsync(id);
+            var countriesItem = await _context.Countries.FindAsync(id);
+
+            if (countriesItem == null)
+            {
+                return NotFound();
+            }
+
+            return countriesItem;
         }
     }
 }
