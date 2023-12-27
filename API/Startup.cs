@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace API
 {
@@ -32,10 +34,11 @@ namespace API
             {
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -54,6 +57,25 @@ namespace API
             {
                 endpoints.MapControllers();
             });
+
+            // create database when we first run our application 
+            using var scope = app.ApplicationServices.CreateScope();
+            var services = scope.ServiceProvider;
+            var context = services.GetRequiredService<AppDbContext>();
+            var logger = services.GetRequiredService<ILogger<Program>>();
+
+            try
+            {
+                // if there is not
+                await context.Database.MigrateAsync();
+
+                // add seed of countries
+                await AppDbContextSeed.SeedAsync(context);
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex, "An error occurred during migration");
+            }
         }
     }
 }

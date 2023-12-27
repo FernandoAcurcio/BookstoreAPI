@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Infrastructure.Data;
 using System.Linq;
+using Infrastructure.Data.Validate;
 
 namespace API.Controllers
 {
@@ -20,7 +21,7 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// retrieve all the sale items
+        /// get list of all sales items
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -28,9 +29,9 @@ namespace API.Controllers
         {
             return await _context.SalesItems.ToListAsync();
         }
-        
+
         /// <summary>
-        /// get a specific sale item by id
+        /// search for a sale item
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -55,10 +56,16 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<SalesItem>> PostSalesItemAsync(SalesItem salesItem)
         {
+            // Validate item price
+            if (salesItem.Price <= 0)
+            {
+                return BadRequest("Invalid price for this item.");
+            }
+
             _context.SalesItems.Add(salesItem);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return NoContent();
         }
 
         /// <summary>
@@ -75,8 +82,29 @@ namespace API.Controllers
                 return BadRequest();
             }
 
+            // Validate item price
+            if (salesItem.Price <= 0)
+            {
+                return BadRequest("Invalid price for this item.");
+            }
+
             _context.Entry(salesItem).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SalesItemExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return NoContent();
         }
@@ -100,6 +128,16 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// verify if a sales item exist
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private bool SalesItemExists(int id)
+        {
+            return _context.SalesItems.Any(e => e.Id == id);
         }
     }
 }
