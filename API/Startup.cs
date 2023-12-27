@@ -66,7 +66,10 @@ namespace API
 
             try
             {
+                // if there is not
                 await context.Database.MigrateAsync();
+
+                // add seed of countries
                 await AppDbContextSeed.SeedAsync(context);
             }
             catch(Exception ex)

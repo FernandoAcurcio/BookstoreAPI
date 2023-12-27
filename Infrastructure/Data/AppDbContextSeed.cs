@@ -11,7 +11,7 @@ namespace Infrastructure.Data
     {
         public static async Task SeedAsync(AppDbContext context)
         {
-            // added a seed of countries
+            // read json of countries and add to the object
             if(!context.Countries.Any())
             {
                 var countriesData = File.ReadAllText("../Infrastructure/Data/SeedData/countries.json");

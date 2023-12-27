@@ -19,6 +19,10 @@ namespace API.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// get list of all countries
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<Country>>> GetCountriesAsync()
         {
@@ -26,7 +30,7 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// get a s
+        /// search for a country
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -43,7 +47,11 @@ namespace API.Controllers
             return country;
         }
 
-        // POST: api/countries
+        /// <summary>
+        /// create country
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Country>> PostCountryAsync(Country country)
         {
@@ -53,7 +61,12 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // PUT: api/countries/5
+        /// <summary>
+        /// update country
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="country"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCountryAsync(int id, Country country)
         {
@@ -83,11 +96,16 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // DELETE: api/countries/5
+        /// <summary>
+        /// delete country
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCountryAsync(int id)
         {
             var country = await _context.Countries.FindAsync(id);
+
             if (country == null)
             {
                 return NotFound();
@@ -99,6 +117,11 @@ namespace API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// verify if a countrie exist
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private bool CountryExists(int id)
         {
             return _context.Countries.Any(e => e.Id == id);

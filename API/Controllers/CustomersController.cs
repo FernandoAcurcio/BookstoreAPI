@@ -20,14 +20,21 @@ namespace API.Controllers
             _context = context;
         }
 
-        // GET: api/customers
+        /// <summary>
+        /// get list of all customers
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<Customer>>> GetCustomersAsync()
         {
             return await _context.Customers.ToListAsync();
         }
 
-        // GET: api/customers/5
+        /// <summary>
+        /// search for a customers
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomerAsync(int id)
         {
@@ -41,6 +48,11 @@ namespace API.Controllers
             return customer;
         }
 
+        /// <summary>
+        /// create customer
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomerAsync(Customer customer)
         {
@@ -59,7 +71,13 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // PUT: api/customers/5
+
+        /// <summary>
+        /// update customer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="country"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomerAsync(int id, Customer customer)
         {
@@ -98,7 +116,11 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // DELETE: api/customers/5
+        /// <summary>
+        /// delete customer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomerAsync(int id)
         {
@@ -114,6 +136,11 @@ namespace API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// verify if a customer exist
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private bool CustomerExists(int id)
         {
             return _context.Customers.Any(e => e.Id == id);
