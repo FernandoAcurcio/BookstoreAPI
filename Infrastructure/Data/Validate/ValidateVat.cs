@@ -1,10 +1,10 @@
 ﻿namespace Infrastructure.Data.Validate
 {
-    public class ValidateVat
+    public static class ValidateVat
     {
         // checks the validity of a Portuguese VAT(NIF) number by verifying its length,
         // examining the first digit against specified values, and applying a calculation for a check digit.
-        public bool ValidVat(string vatString)
+        public static bool ValidVat(string vatString)
         {
             // Check if the VAT string has exactly 9 characters
             if (vatString.Length != 9)
